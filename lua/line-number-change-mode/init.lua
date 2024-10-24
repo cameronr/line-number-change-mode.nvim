@@ -17,6 +17,11 @@ function M.setup(opts)
             vim.cmd.redraw()
          end
       end
+
+      -- Keep track of mode because we don't get a ModeChanged event when
+      -- opening a file from Telescope. See:
+      -- https://github.com/sethen/line-number-change-mode.nvim/issues/7
+      M.mode = mode
    end
 
    set_hl_for_mode(va.nvim_get_mode().mode)
@@ -31,6 +36,24 @@ function M.setup(opts)
          end
 
          set_hl_for_mode(new_mode)
+      end,
+   })
+
+   vim.api.nvim_create_autocmd({ "WinLeave" }, {
+      group = group,
+      callback = function(_)
+         -- If we're leaving a window and we're still in insert mode, schedule 
+         -- a callback for the next run of the event loop to make sure the 
+         -- correct mode highlight is displayed. See:
+         -- https://github.com/sethen/line-number-change-mode.nvim/issues/7
+         if M.mode == 'i' then
+            vim.schedule(function()
+               if opts.debug then 
+                  vim.notify('in insert mode, will schedule mode set')
+               end
+               set_hl_for_mode(vim.api.nvim_get_mode().mode)
+            end)
+         end
       end,
    })
 end
