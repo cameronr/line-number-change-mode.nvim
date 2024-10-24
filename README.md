@@ -57,6 +57,7 @@ return {
 
 It's off by defaut, but if you set `hide_inactive_cursorline = true`, then this plugin will hide the cursorline for inactive windows so the mode highlight will only be shown in the currently active window:
 
+![Screenshot 2024-10-24 at 12 16 58](https://github.com/user-attachments/assets/2286df66-af72-43e7-b4fc-305f696ad206)
 
 Note: if you're lazy loading this plugin and want to hide inactive window cursorlines, make sure `event` is either set to `VeryLazy` or as follows:
 
