@@ -46,9 +46,25 @@ return {
                     fg = palette.mantle,
                     bold = true,
                 },
-            }
+            },
+            hide_inactive_cursorline = false,
         })
     end
+}
+```
+
+## Hiding inactive cursorlines
+
+It's off by defaut, but if you set `hide_inactive_cursorline = true`, then this plugin will hide the cursorline for inactive windows so the mode highlight will only be shown in the currently active window:
+
+
+Note: if you're lazy loading this plugin and want to hide inactive window cursorlines, make sure `event` is either set to `VeryLazy` or as follows:
+
+```lua
+return {
+  'sethen/line-number-change-mode.nvim',
+  event = { 'ModeChanged', 'WinEnter', 'WinLeave' },
+...
 }
 ```
 
